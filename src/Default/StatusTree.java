@@ -94,15 +94,15 @@ public class StatusTree extends BalancedBinarySearchTree<Segment> {
 			
 			StatusTree t;			
 			// Try to find a segment closer
-			if(currentSegment.isAtLeftRightOfPoint(p, Direction.RIGHT)){
+			
+			// If the found segment is at the right of p, go to p (to the left)
+			if(currentSegment.compareTo(p, Direction.RIGHT)){
 				t = getLeft();	
 			}else{
 				t = getRight();
 			}
-			
-			Segment lastCandidate = currentSegment.isAtLeftRightOfPoint(p, direction) ? currentSegment : prec;
 				
-			return t.getNeighbour(p, direction, lastCandidate);
+			return t.getNeighbour(p, direction, currentSegment);
 			
 		}
 

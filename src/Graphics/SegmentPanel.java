@@ -14,8 +14,8 @@ import java.util.HashSet;
 import javax.swing.JPanel;
 import Default.ComparablePoint;
 import Default.Map;
+import Default.Pair;
 import Default.Segment;
-import javafx.util.Pair;
 
 public class SegmentPanel extends JPanel implements MouseListener {
 	

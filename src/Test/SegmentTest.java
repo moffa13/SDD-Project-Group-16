@@ -1,6 +1,7 @@
 package Test;
 import org.junit.Test;
 import Default.ComparablePoint;
+import Default.Direction;
 import Default.Segment;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
@@ -213,5 +214,20 @@ public class SegmentTest {
 		Segment s = new Segment(null, 0, p, pI);
 		
 		assertEquals(100, s.findIntersectionWithY(50), 0.005);
+	}
+	
+	
+	@Test
+	public void isAtLeftOrRight(){
+		ComparablePoint p = new ComparablePoint(new Double(10, 10));
+		ComparablePoint pI = new ComparablePoint(new Double(100, 100));
+		Segment s = new Segment(null, 0, p, pI);
+		
+		ComparablePoint pt1 = new ComparablePoint(new Double(0, 50));
+		ComparablePoint pt2 = new ComparablePoint(new Double(60, 50));
+
+		
+		assertTrue(s.isAtLeftRightOfPoint(pt1, Direction.RIGHT));
+		assertTrue(s.isAtLeftRightOfPoint(pt2, Direction.LEFT));
 	}
 }
