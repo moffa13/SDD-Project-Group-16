@@ -64,7 +64,39 @@ public class StatusTree extends BalancedBinarySearchTree<Segment> {
 	}
 	
 	public Segment getNeighbour(Segment p, Direction direction){
-		return getNeighbour(p, direction, null);
+		Pair<BalancedBinarySearchTree<Segment>, HashSet<Segment>> p2 = searchTree(p);
+		if(p2 == null) {
+			return null;
+		}
+		
+		StatusTree tree = (StatusTree)(p2.getKey());
+		
+		if(direction == Direction.LEFT && tree.getLeft().getData() != null) { // Left neighbour required and has a left child
+			return tree.getNeighbour(p, direction, null, true);
+		}else if(direction == Direction.RIGHT && tree.getRight().getData() != null) { // Right neighbour required and has a right child
+			return tree.getNeighbour(p, direction, null, true);
+		}else {
+			return getMinMaxDirection(p, p2.getValue(), direction);
+		}
+		
+	}
+	
+	/**
+	 * Returns the direct neighbour of a segment in a set
+	 * @param segment
+	 * @param set
+	 * @param d Whether you look for the left or the right neighbour
+	 * @return
+	 */
+	public Segment getMinMaxDirection(Segment segment, HashSet<Segment> set, Direction d) {
+		Segment s = null;
+		for(Segment seg : set) {
+			if(d == Direction.LEFT && seg.compareTo(segment) < 0 && (s == null || seg.compareTo(s) > 1)
+			|| (d == Direction.RIGHT && seg.compareTo(segment) > 0 && (s == null || seg.compareTo(s) < 1))) {
+					s = seg;
+			}
+		}
+		return s;
 	}
 	
 	/**
@@ -74,18 +106,18 @@ public class StatusTree extends BalancedBinarySearchTree<Segment> {
 	 * @param prec The last good candidate for recursion
 	 * @return The Segment which is the neighbour
 	 */
-	public Segment getNeighbour(Segment p, Direction direction, Segment prec){
+	public Segment getNeighbour(Segment p, Direction direction, Segment prec, boolean dir){
 		
 		Segment currentSegment = getData();
 		
 		if(currentSegment == null) return prec;
 		
 		// If intersection with p, go to direction
-		if(currentSegment.intersectWithPoint(p.getLowerEndpoint())){
+		if(dir){
 			if(direction == Direction.LEFT){
-				return getLeft().getNeighbour(p, direction, prec);
+				return getLeft().getNeighbour(p, direction, null, false);
 			}else{
-				return getRight().getNeighbour(p, direction, prec);
+				return getRight().getNeighbour(p, direction, null, false);
 			}
 		}
 		
@@ -96,13 +128,13 @@ public class StatusTree extends BalancedBinarySearchTree<Segment> {
 			// Try to find a segment closer
 			
 			// If the found segment is at the right of p, go to p (to the left)
-			if(currentSegment.compareTo(p) > 0){
+			if(direction == Direction.RIGHT){
 				t = getLeft();	
 			}else{
 				t = getRight();
 			}
 				
-			return t.getNeighbour(p, direction, currentSegment);
+			return t.getNeighbour(p, direction, currentSegment, false);
 			
 		}
 

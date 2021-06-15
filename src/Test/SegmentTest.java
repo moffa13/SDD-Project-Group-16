@@ -5,6 +5,7 @@ import Default.Direction;
 import Default.Segment;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 
 import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Double;
@@ -216,6 +217,33 @@ public class SegmentTest {
 		assertEquals(100, s.findIntersectionWithY(50), 0.005);
 	}
 	
+	@Test
+	public void xIntersectNormal(){
+		ComparablePoint p = new ComparablePoint(new Double(10, 10));
+		ComparablePoint pI = new ComparablePoint(new Double(100, 100));
+		Segment s = new Segment(null, 0, p, pI);
+		
+		assertEquals(50, s.findIntersectionWithX(50), 0.005);
+	}
+	
+	@Test
+	public void xIntersectHorizontal(){
+		ComparablePoint p = new ComparablePoint(new Double(70, 100));
+		ComparablePoint pI = new ComparablePoint(new Double(162, 100));
+		Segment s = new Segment(null, 0, p, pI);
+
+		assertEquals(100, s.findIntersectionWithX(50), 0.05);
+	}
+	
+	@Test(expected = RuntimeException.class)
+	public void xIntersectVertical(){
+		ComparablePoint p = new ComparablePoint(new Double(100, 70));
+		ComparablePoint pI = new ComparablePoint(new Double(100, 162));
+		Segment s = new Segment(null, 0, p, pI);
+		
+		s.findIntersectionWithX(50);
+	}
+	
 	
 	@Test
 	public void isAtLeftOrRight(){
@@ -230,4 +258,32 @@ public class SegmentTest {
 		assertTrue(s.isAtLeftRightOfPoint(pt1, Direction.RIGHT));
 		assertTrue(s.isAtLeftRightOfPoint(pt2, Direction.LEFT));
 	}
+	
+	@Test(expected = RuntimeException.class)
+	public void twoVerticalIntersection(){
+		ComparablePoint p = new ComparablePoint(new Double(0, 0));
+		ComparablePoint p2 = new ComparablePoint(new Double(0, 100));
+		Segment s = new Segment(null, 0, p, p2);
+		
+		ComparablePoint p3 = new ComparablePoint(new Double(0, 50));
+		ComparablePoint p4 = new ComparablePoint(new Double(0, 150));
+		Segment s2 = new Segment(null, 0, p3, p4);
+		
+		s.findIntersectionWithSegment(s2);
+	}
+	
+	@Test
+	public void twoVerticalIntersectionNotColliding(){
+		ComparablePoint p = new ComparablePoint(new Double(0, 0));
+		ComparablePoint p2 = new ComparablePoint(new Double(0, 100));
+		Segment s = new Segment(null, 0, p, p2);
+		
+		ComparablePoint p3 = new ComparablePoint(new Double(0, 101));
+		ComparablePoint p4 = new ComparablePoint(new Double(0, 150));
+		Segment s2 = new Segment(null, 0, p3, p4);
+		
+		assertNull(s.findIntersectionWithSegment(s2));
+	}
+	
+	
 }

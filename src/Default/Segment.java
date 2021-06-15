@@ -134,9 +134,16 @@ public class Segment implements Comparable<Segment> {
 	 * @param s the segment to look for intersection
 	 * @return A point representing the intersection
 	 */
+	@SuppressWarnings("unused")
 	public Point2D.Double findIntersectionWithSegment(Segment s){
 		
 		if(isHorizontal()){
+			if(s.isHorizontal()) {
+				if(
+						(intersectWithPoint(s.getUpperEndpoint()) || intersectWithPoint(s.getLowerEndpoint()))){
+							throw new RuntimeException("Parallel segments");	
+						}
+			}
 			Point2D.Double rp = new Point2D.Double(s.findIntersectionWithY(getUpperEndpoint()._p.y), getUpperEndpoint()._p.y);
 			ComparablePoint p = new ComparablePoint(rp);
 			if(mightContainPoint(p) && s.mightContainPoint(p)) return rp;
@@ -146,6 +153,15 @@ public class Segment implements Comparable<Segment> {
 		}
 		
 		if(isVertical()){
+			if(s.isVertical()) {
+				if(
+					(intersectWithPoint(s.getUpperEndpoint()) || intersectWithPoint(s.getLowerEndpoint()))){
+						//throw new RuntimeException("Parallel segments");	
+						int a = 5;
+					}
+			
+				return null;
+			}
 			Point2D.Double rp = new Point2D.Double(getUpperEndpoint()._p.x, s.findIntersectionWithX(getUpperEndpoint()._p.x));
 			ComparablePoint p = new ComparablePoint(rp);
 			if(mightContainPoint(p) && s.mightContainPoint(p)) return rp;

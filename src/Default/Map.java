@@ -168,6 +168,7 @@ public class Map {
 		while(!eventQueue.isEmpty()){
 			ComparablePoint nextEventPoint = eventQueue.deleteMax();
 			status.setEventPoint(nextEventPoint);
+			System.out.println("-----------" + nextEventPoint._p.x + " " + nextEventPoint._p.y);
 			handleEventPoint();
 		}
 		status.clear();

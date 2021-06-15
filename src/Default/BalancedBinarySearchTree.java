@@ -1,5 +1,7 @@
 package Default;
 
+import java.util.HashSet;
+
 /**
  * BST working with the Comparable implementation
  * @author moffa
@@ -163,14 +165,25 @@ public class BalancedBinarySearchTree <E extends Comparable<E>> {
 	}
 	
 	public E search(E elem){
+		Pair<BalancedBinarySearchTree<E>, HashSet<E>> e = searchTree(elem);
+		if(e == null) return null;
+		return e.getKey().getData();
+	}
+	
+	public Pair<BalancedBinarySearchTree<E>, HashSet<E>> searchTree(E elem){
+		return searchTree(elem, new HashSet<E>());
+	}
+	
+	public Pair<BalancedBinarySearchTree<E>, HashSet<E>> searchTree(E elem, HashSet<E> set){
 		if(isEmpty()) return null;
 		int comp = elem.compareTo(getData());
+		set.add(getData());
 		if(comp == 0){ // =
-			return getData();
+			return new Pair<BalancedBinarySearchTree<E>, HashSet<E>>(this, set);
 		}else if(comp > 0){
-			return getRight().search(elem);
+			return getRight().searchTree(elem, set);
 		}
-		return getLeft().search(elem);
+		return getLeft().searchTree(elem, set);
 	}
 	
 	
