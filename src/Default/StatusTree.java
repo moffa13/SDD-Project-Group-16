@@ -63,7 +63,7 @@ public class StatusTree extends BalancedBinarySearchTree<Segment> {
 		
 	}
 	
-	public Segment getNeighbour(ComparablePoint p, Direction direction){
+	public Segment getNeighbour(Segment p, Direction direction){
 		return getNeighbour(p, direction, null);
 	}
 	
@@ -74,14 +74,14 @@ public class StatusTree extends BalancedBinarySearchTree<Segment> {
 	 * @param prec The last good candidate for recursion
 	 * @return The Segment which is the neighbour
 	 */
-	public Segment getNeighbour(ComparablePoint p, Direction direction, Segment prec){
+	public Segment getNeighbour(Segment p, Direction direction, Segment prec){
 		
 		Segment currentSegment = getData();
 		
 		if(currentSegment == null) return prec;
 		
 		// If intersection with p, go to direction
-		if(currentSegment.intersectWithPoint(p)){
+		if(currentSegment.intersectWithPoint(p.getLowerEndpoint())){
 			if(direction == Direction.LEFT){
 				return getLeft().getNeighbour(p, direction, prec);
 			}else{
@@ -96,7 +96,7 @@ public class StatusTree extends BalancedBinarySearchTree<Segment> {
 			// Try to find a segment closer
 			
 			// If the found segment is at the right of p, go to p (to the left)
-			if(currentSegment.compareTo(p, Direction.RIGHT)){
+			if(currentSegment.compareTo(p) > 0){
 				t = getLeft();	
 			}else{
 				t = getRight();

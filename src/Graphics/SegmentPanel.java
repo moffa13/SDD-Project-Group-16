@@ -24,7 +24,7 @@ public class SegmentPanel extends JPanel implements MouseListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Map _m;
-	private final static int scale = 5;
+	private final static int scale = 3;
 	private final MainWindow _window;
 	private boolean _editMode = false;
 	

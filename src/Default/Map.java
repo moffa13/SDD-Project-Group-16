@@ -96,18 +96,16 @@ public class Map {
 	 */
 	private Segment findLeftRightMostSegment(HashSet<Segment> set, Direction direction){
 		Segment leftRightMost = null;
-		status.setInsertMode();
 		for(Segment s : set){
 			if(leftRightMost == null) leftRightMost = s;
 			else if(direction == Direction.LEFT &&
-					s.compareTo(leftRightMost) < 0){
+					Utilities.approxSmaller(s.getLowerEndpoint()._p.x, leftRightMost.getLowerEndpoint()._p.x)){
 				leftRightMost = s;
 			}else if(direction == Direction.RIGHT &&
-					s.compareTo(leftRightMost) > 0){
+					Utilities.approxGreater(s.getLowerEndpoint()._p.x, leftRightMost.getLowerEndpoint()._p.x)){
 				leftRightMost = s;
 			}
 		}
-		status.unsetInsertMode();
 		return leftRightMost;
 	}	
 	
@@ -227,15 +225,15 @@ public class Map {
 		getStatus().unsetInsertMode();
 		
 		if(uc.size() == 0){ // No segment at the bottom of p
-			Segment leftNeighbour = status.tree().getNeighbour(eventPoint, Direction.LEFT);
-			Segment rightNeighbour = status.tree().getNeighbour(eventPoint, Direction.RIGHT);
+			Segment leftNeighbour = status.tree().getNeighbour(l.iterator().next(), Direction.LEFT);
+			Segment rightNeighbour = status.tree().getNeighbour(l.iterator().next(), Direction.RIGHT);
 			findNewEvent(leftNeighbour, rightNeighbour, eventPoint);
 		}else{ // intersection continues...
 			Segment leftMost = findLeftRightMostSegment(uc, Direction.LEFT);
 			Segment rightMost = findLeftRightMostSegment(uc, Direction.RIGHT);
-			Segment leftNeighbour = status.tree().getNeighbour(eventPoint, Direction.LEFT);
+			Segment leftNeighbour = status.tree().getNeighbour(leftMost, Direction.LEFT);
 			findNewEvent(leftNeighbour, leftMost, eventPoint);
-			Segment rightNeighbour = status.tree().getNeighbour(eventPoint, Direction.RIGHT);
+			Segment rightNeighbour = status.tree().getNeighbour(rightMost, Direction.RIGHT);
 			findNewEvent(rightNeighbour, rightMost, eventPoint);
 		}
 		

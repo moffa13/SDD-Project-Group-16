@@ -239,28 +239,19 @@ public class Segment implements Comparable<Segment> {
 	public int compareTo(Segment o) {
 		
 			if(equals(o)) return 0;
-		
+			
+			if(isHorizontal()){
+				return 1;
+			}else if(o.isHorizontal()){
+				return -1;
+			}
+			
 			// Find intersection x value with the sweep line
 			double s1xIntercept = findIntersectionWithY(_status.getSweepLinePosition()); 
 			double s2xIntercept = o.findIntersectionWithY(_status.getSweepLinePosition()); 
-			
-			ComparablePoint eventPoint = _status.getEventPoint();
-			
-			if(isHorizontal()){
-				if(intersectWithPoint(eventPoint)){ // s2 intercepts eventPoint
-					return 1;
-				}else if(Utilities.approxSmaller(s2xIntercept, getUpperEndpoint()._p.x)){
-					return 1;
-				}
-				else if(Utilities.approxGreater(s2xIntercept, getLowerEndpoint()._p.x) ){
-					return -1;
-				}
-			}else if(o.isHorizontal()){
-				return -o.compareTo(this);
-			}
 					
 			// If the current segment has a higher X, it is considered bigger.
-			else if(Utilities.approxGreater(s1xIntercept, s2xIntercept)){
+			if(Utilities.approxGreater(s1xIntercept, s2xIntercept)){
 				return 1;
 			}
 			// If the current segment has a lower X, it is considered smaller.
@@ -279,7 +270,6 @@ public class Segment implements Comparable<Segment> {
 					return _status.isInsertMode() ? 1 : -1;
 				}
 			}
-			return 0;
 					
 	}
 }
