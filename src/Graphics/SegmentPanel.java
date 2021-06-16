@@ -1,6 +1,7 @@
 package Graphics;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -16,7 +17,6 @@ import Default.ComparablePoint;
 import Default.Map;
 import Default.Pair;
 import Default.Segment;
-import Default.Utilities;
 
 public class SegmentPanel extends JPanel implements MouseListener {
 	
@@ -25,7 +25,7 @@ public class SegmentPanel extends JPanel implements MouseListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Map _m;
-	private final static int scale = 3;
+	private final static int scale = 4;
 	private final MainWindow _window;
 	private boolean _editMode = false;
 	
@@ -54,7 +54,9 @@ public class SegmentPanel extends JPanel implements MouseListener {
 		double reversedY1 = getOffset() - s.getP1()._p.y;
 		double x2 = s.getP2()._p.x;
 		double reversedY2 = getOffset() - s.getP2()._p.y; 
-		
+		g2d.setFont(new Font("TimesRoman", Font.PLAIN, 4));
+		g2d.drawString(x1 + " " +  s.getP1()._p.y, (int)x1, (int)reversedY1);
+		g2d.drawString(x2 + " " + s.getP2()._p.y, (int)x2, (int)reversedY2);
 		g2d.draw(new Line2D.Double(x1, reversedY1, x2, reversedY2));
 	}
 	

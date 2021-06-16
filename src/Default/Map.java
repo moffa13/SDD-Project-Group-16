@@ -192,6 +192,10 @@ public class Map {
 		uc.addAll(u);
 		uc.addAll(c);
 		
+		HashSet<Segment> lc = new HashSet<>();
+		lc.addAll(l);
+		lc.addAll(c);
+		
 		if(luc.size() > 1){
 			System.out.println("intersection point x: " + eventPoint._p.x + ", y:" + eventPoint._p.y);
 			HashSet<Integer> differentGroups = new HashSet<>();
@@ -205,36 +209,21 @@ public class Map {
 			
 			
 		}
+		
 	
-		
-		
-		System.out.println("removing " + l.size());
-		System.out.println("tree size " + status.tree().getSize());
-
-		
-		// Remove l
-		for(Segment s : l){
+		// Remove l U c
+		for(Segment s : lc){
 			status.tree().delete(s);
 		}
-		
-		System.out.println("tree size " + status.tree().getSize());
-		System.out.println("removing " + l.size());
-		
-		// Remove c
-		for(Segment s : c){
-			status.tree().delete(s);
-		}
-		
-		
-		System.out.println("tree size " + status.tree().getSize());
-		
 
 		
 		// insert c union u
 		// Remove and insert c in order to swap the order.
-		getStatus().setInsertMode();
+		status.setInsertMode();
+		
 		for(Segment s : uc){
 			status.tree().insert(s);
+			status.tree().check();
 		}
 		
 		
@@ -251,8 +240,7 @@ public class Map {
 			findNewEvent(rightNeighbour, rightMost, eventPoint);
 		}
 		
-		getStatus().unsetInsertMode();
-		
+		status.unsetInsertMode();
 		
 	}
 	

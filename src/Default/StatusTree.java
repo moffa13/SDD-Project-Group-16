@@ -91,8 +91,8 @@ public class StatusTree extends BalancedBinarySearchTree<Segment> {
 	public Segment getMinMaxDirection(Segment segment, HashSet<Segment> set, Direction d) {
 		Segment s = null;
 		for(Segment seg : set) {
-			if(d == Direction.LEFT && seg.compareTo(segment) < 0 && (s == null || seg.compareTo(s) > 1)
-			|| (d == Direction.RIGHT && seg.compareTo(segment) > 0 && (s == null || seg.compareTo(s) < 1))) {
+			if(d == Direction.LEFT && seg.compareTo(segment) < 0 && (s == null || seg.compareTo(s) > 0)
+			|| (d == Direction.RIGHT && seg.compareTo(segment) > 0 && (s == null || seg.compareTo(s) < 0))) {
 					s = seg;
 			}
 		}

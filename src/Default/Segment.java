@@ -255,14 +255,26 @@ public class Segment implements Comparable<Segment> {
 		
 			if(equals(o)) return 0;
 			
+			ComparablePoint p = _status.getEventPoint();
+			
+			double s1xIntercept;
+			
 			if(isHorizontal()){
-				return 1;
+				if(o.intersectWithPoint(p)){
+					return -1;
+				}else if(o.isHorizontal()){
+					if(Utilities.approxSmaller(o.getUpperEndpoint()._p.x, getUpperEndpoint()._p.x)) return 1;
+					return -1;
+				}
+				s1xIntercept = p._p.x;
 			}else if(o.isHorizontal()){
-				return -1;
+				return -o.compareTo(this);
+			}else{
+				// Find intersection x value with the sweep line
+				s1xIntercept = findIntersectionWithY(_status.getSweepLinePosition()); 
 			}
 			
-			// Find intersection x value with the sweep line
-			double s1xIntercept = findIntersectionWithY(_status.getSweepLinePosition()); 
+			
 			double s2xIntercept = o.findIntersectionWithY(_status.getSweepLinePosition()); 
 					
 			// If the current segment has a higher X, it is considered bigger.

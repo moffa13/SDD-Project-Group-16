@@ -91,6 +91,7 @@ public class StatusTreeTest {
 		assertTrue(s2.compareTo(s) < 0);
 		
 		status.setInsertMode();
+		
 		assertTrue(s3.compareTo(s2) < 0);
 		assertTrue(s3.compareTo(s) < 0);
 		assertTrue(s2.compareTo(s) > 0);
