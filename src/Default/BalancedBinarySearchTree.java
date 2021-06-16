@@ -45,6 +45,11 @@ public class BalancedBinarySearchTree <E extends Comparable<E>> {
 		}
 	}
 	
+	public int getSize() {
+		if(getData() == null) return 0;
+		return 1 + getLeft().getSize() + getRight().getSize();
+	}
+	
 	public E deleteMax() {
 		if (isEmpty()) 
 			return null;
@@ -181,7 +186,15 @@ public class BalancedBinarySearchTree <E extends Comparable<E>> {
 		if(comp == 0){ // =
 			return new Pair<BalancedBinarySearchTree<E>, HashSet<E>>(this, set);
 		}else if(comp > 0){
+			if(getRight().getData() != null && getData().compareTo(getRight().getData()) > 1) {
+				 getData().compareTo(getRight().getData());
+				throw new RuntimeException();
+			}
 			return getRight().searchTree(elem, set);
+		}
+		if(getLeft().getData() != null && getData().compareTo(getLeft().getData()) < 1) {
+			getData().compareTo(getLeft().getData());
+			throw new RuntimeException();
 		}
 		return getLeft().searchTree(elem, set);
 	}

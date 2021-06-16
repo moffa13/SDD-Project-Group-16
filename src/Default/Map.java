@@ -99,10 +99,10 @@ public class Map {
 		for(Segment s : set){
 			if(leftRightMost == null) leftRightMost = s;
 			else if(direction == Direction.LEFT &&
-					Utilities.approxSmaller(s.getLowerEndpoint()._p.x, leftRightMost.getLowerEndpoint()._p.x)){
+					s.compareTo(leftRightMost) < 0){
 				leftRightMost = s;
 			}else if(direction == Direction.RIGHT &&
-					Utilities.approxGreater(s.getLowerEndpoint()._p.x, leftRightMost.getLowerEndpoint()._p.x)){
+					s.compareTo(leftRightMost) > 0){
 				leftRightMost = s;
 			}
 		}
@@ -168,7 +168,6 @@ public class Map {
 		while(!eventQueue.isEmpty()){
 			ComparablePoint nextEventPoint = eventQueue.deleteMax();
 			status.setEventPoint(nextEventPoint);
-			System.out.println("-----------" + nextEventPoint._p.x + " " + nextEventPoint._p.y);
 			handleEventPoint();
 		}
 		status.clear();
@@ -179,8 +178,8 @@ public class Map {
 		ComparablePoint eventPoint = status.getEventPoint();
 		
 		
-		HashSet<Segment> u = eventPoint.getLowerSegments();
-		HashSet<Segment> l = eventPoint.getUpperSegments();
+		HashSet<Segment> u = eventPoint.getLowerSegments(); // Starting
+		HashSet<Segment> l = eventPoint.getUpperSegments(); // Ending
 		HashSet<Segment> c = status.tree().findC(eventPoint);
 
 		HashSet<Segment> luc = new HashSet<>();
@@ -211,6 +210,7 @@ public class Map {
 		for(Segment s : l){
 			status.tree().delete(s);
 		}
+
 		
 		// Remove c
 		for(Segment s : c){
@@ -223,7 +223,7 @@ public class Map {
 		for(Segment s : uc){
 			status.tree().insert(s);
 		}
-		getStatus().unsetInsertMode();
+		
 		
 		if(uc.size() == 0){ // No segment at the bottom of p
 			Segment leftNeighbour = status.tree().getNeighbour(l.iterator().next(), Direction.LEFT);
@@ -237,6 +237,8 @@ public class Map {
 			Segment rightNeighbour = status.tree().getNeighbour(rightMost, Direction.RIGHT);
 			findNewEvent(rightNeighbour, rightMost, eventPoint);
 		}
+		
+		getStatus().unsetInsertMode();
 		
 		
 	}

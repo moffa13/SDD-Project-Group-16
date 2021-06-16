@@ -16,6 +16,7 @@ import Default.ComparablePoint;
 import Default.Map;
 import Default.Pair;
 import Default.Segment;
+import Default.Utilities;
 
 public class SegmentPanel extends JPanel implements MouseListener {
 	
@@ -96,7 +97,11 @@ public class SegmentPanel extends JPanel implements MouseListener {
 			
 			// Segments
 			for(Segment s : _window.shouldShowOnlyIntersections() ? intersectSegments : _m.getSegments()){
-				g2d.setColor(_window.getColor(s));
+				if(_m.getStatus().tree().search(s) != null) {
+					g2d.setColor(Color.WHITE);
+				}else {
+					g2d.setColor(_window.getColor(s));
+				}
 				drawSegment(s, g2d);
 			}
 			
@@ -116,7 +121,10 @@ public class SegmentPanel extends JPanel implements MouseListener {
 				drawCross(5, 5, p1.toPoint(), g2d);
 			}
 			
+		
+			
 			if(_m.getStatus().getEventPoint() != null){
+				
 				
 				// Event point
 				g2d.setColor(Color.PINK);
