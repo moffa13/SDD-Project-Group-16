@@ -32,22 +32,37 @@ public class BalancedBinarySearchTree <E extends Comparable<E>> {
 			insertEmpty(elem);
 		}else{
 			int comp = elem.compareTo(getData());
-			if(comp == 0){
-				// Do nothing for now
-			}else if(comp == 1){
+			if(comp < 0){
+				getLeft().insert(elem);
+			}else if(comp > 0){
 				// elem is greater, insert right
 				getRight().insert(elem);
-				equilibrate();
-			}else{
-				getLeft().insert(elem);
-				equilibrate();
 			}
+			equilibrate();
 		}
 	}
 	
 	public int getSize() {
 		if(getData() == null) return 0;
 		return 1 + getLeft().getSize() + getRight().getSize();
+	}
+	
+	public void check() {
+		if(getRight() != null && getRight().getData() != null) {
+			getRight().check();
+			if(getData().compareTo(getRight().getData()) > 1) {
+				System.out.println("ERRRRRRRRRRRRR");
+			}
+		}
+	
+		if(getLeft() != null && getLeft().getData() != null) {
+			getLeft().check();
+			if(getData().compareTo(getLeft().getData()) < 1) {
+				System.out.println("ERRRRRRRRRRRRR");
+
+			}
+		}
+	
 	}
 	
 	public E deleteMax() {
@@ -186,15 +201,7 @@ public class BalancedBinarySearchTree <E extends Comparable<E>> {
 		if(comp == 0){ // =
 			return new Pair<BalancedBinarySearchTree<E>, HashSet<E>>(this, set);
 		}else if(comp > 0){
-			if(getRight().getData() != null && getData().compareTo(getRight().getData()) > 1) {
-				 getData().compareTo(getRight().getData());
-				throw new RuntimeException();
-			}
 			return getRight().searchTree(elem, set);
-		}
-		if(getLeft().getData() != null && getData().compareTo(getLeft().getData()) < 1) {
-			getData().compareTo(getLeft().getData());
-			throw new RuntimeException();
 		}
 		return getLeft().searchTree(elem, set);
 	}

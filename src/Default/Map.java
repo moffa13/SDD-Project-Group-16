@@ -205,17 +205,30 @@ public class Map {
 			
 			
 		}
+	
+		
+		
+		System.out.println("removing " + l.size());
+		System.out.println("tree size " + status.tree().getSize());
+
 		
 		// Remove l
 		for(Segment s : l){
 			status.tree().delete(s);
 		}
-
+		
+		System.out.println("tree size " + status.tree().getSize());
+		System.out.println("removing " + l.size());
 		
 		// Remove c
 		for(Segment s : c){
 			status.tree().delete(s);
 		}
+		
+		
+		System.out.println("tree size " + status.tree().getSize());
+		
+
 		
 		// insert c union u
 		// Remove and insert c in order to swap the order.
