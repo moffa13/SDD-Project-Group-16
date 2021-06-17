@@ -71,9 +71,9 @@ public class StatusTree extends BalancedBinarySearchTree<Segment> {
 		
 		StatusTree tree = (StatusTree)(p2.getKey());
 		
-		if(direction == Direction.LEFT && tree.getLeft().getData() != null) { // Left neighbour required and has a left child
+		if(direction == Direction.LEFT && tree.getLeft() != null && tree.getLeft().getData() != null) { // Left neighbour required and has a left child
 			return tree.getNeighbour(p, direction, null, true);
-		}else if(direction == Direction.RIGHT && tree.getRight().getData() != null) { // Right neighbour required and has a right child
+		}else if(direction == Direction.RIGHT && tree.getRight() != null && tree.getRight().getData() != null) { // Right neighbour required and has a right child
 			return tree.getNeighbour(p, direction, null, true);
 		}else {
 			return getMinMaxDirection(p, p2.getValue(), direction);
@@ -88,7 +88,7 @@ public class StatusTree extends BalancedBinarySearchTree<Segment> {
 	 * @param d Whether you look for the left or the right neighbour
 	 * @return
 	 */
-	public Segment getMinMaxDirection(Segment segment, HashSet<Segment> set, Direction d) {
+	public static Segment getMinMaxDirection(Segment segment, HashSet<Segment> set, Direction d) {
 		Segment s = null;
 		for(Segment seg : set) {
 			if(d == Direction.LEFT && seg.compareTo(segment) < 0 && (s == null || seg.compareTo(s) > 0)

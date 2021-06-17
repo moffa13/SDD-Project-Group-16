@@ -2,7 +2,7 @@ package Default;
 
 public class Utilities {
 	public static boolean approxEqual(double d1, double d2){
-		return Math.abs(d2 - d1) < 0.00001;
+		return Math.abs(d2 - d1) < 0.0001;
 	}
 	public static boolean approxSmaller(double d1, double d2){
 		return !approxEqual(d1, d2) && d1 < d2;

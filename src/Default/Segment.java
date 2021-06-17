@@ -258,13 +258,15 @@ public class Segment implements Comparable<Segment> {
 			ComparablePoint p = _status.getEventPoint();
 			
 			double s1xIntercept;
+			double s2xIntercept;
 			
 			if(isHorizontal()){
 				if(o.intersectWithPoint(p)){
-					return -1;
+					return 1;
 				}else if(o.isHorizontal()){
-					if(Utilities.approxSmaller(o.getUpperEndpoint()._p.x, getUpperEndpoint()._p.x)) return 1;
-					return -1;
+					s2xIntercept = o.getUpperEndpoint()._p.x;
+				}else{
+					s2xIntercept = o.findIntersectionWithY(_status.getSweepLinePosition());
 				}
 				s1xIntercept = p._p.x;
 			}else if(o.isHorizontal()){
@@ -272,11 +274,9 @@ public class Segment implements Comparable<Segment> {
 			}else{
 				// Find intersection x value with the sweep line
 				s1xIntercept = findIntersectionWithY(_status.getSweepLinePosition()); 
+				s2xIntercept = o.findIntersectionWithY(_status.getSweepLinePosition()); 
 			}
-			
-			
-			double s2xIntercept = o.findIntersectionWithY(_status.getSweepLinePosition()); 
-					
+								
 			// If the current segment has a higher X, it is considered bigger.
 			if(Utilities.approxGreater(s1xIntercept, s2xIntercept)){
 				return 1;
@@ -286,15 +286,15 @@ public class Segment implements Comparable<Segment> {
 				return -1;
 			}else{
 				// They both cross the sweep line at the same x
-				double s1UpperPointX = getUpperEndpoint()._p.x; 
-				double s2UpperPointX = o.getUpperEndpoint()._p.x;
+				double s1newIntercept = findIntersectionWithY(_status.getSweepLinePosition() - 0.01); 
+				double s2newIntercept = o.findIntersectionWithY(_status.getSweepLinePosition() - 0.01);
 				// If the current segment's upper endpoint has smaller X, 
 				// it is considered bigger because after crossing the other segment 
 				// it will be at the opposite side.
-				if(Utilities.approxGreater(s1UpperPointX, s2UpperPointX)){
-					return _status.isInsertMode() ? -1 : 1;
+				if(Utilities.approxGreater(s1newIntercept, s2newIntercept)){
+					return 1;
 				}else{
-					return _status.isInsertMode() ? 1 : -1;
+					return -1;
 				}
 			}
 					

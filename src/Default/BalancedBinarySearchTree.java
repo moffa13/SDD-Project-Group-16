@@ -195,7 +195,7 @@ public class BalancedBinarySearchTree <E extends Comparable<E>> {
 	}
 	
 	public Pair<BalancedBinarySearchTree<E>, HashSet<E>> searchTree(E elem, HashSet<E> set){
-		if(isEmpty()) return null;
+		if(isEmpty()) return new Pair<BalancedBinarySearchTree<E>, HashSet<E>>(this, set);
 		int comp = elem.compareTo(getData());
 		set.add(getData());
 		if(comp == 0){ // =

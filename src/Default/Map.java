@@ -197,7 +197,7 @@ public class Map {
 		lc.addAll(c);
 		
 		if(luc.size() > 1){
-			System.out.println("intersection point x: " + eventPoint._p.x + ", y:" + eventPoint._p.y);
+			//System.out.println("intersection point x: " + eventPoint._p.x + ", y:" + eventPoint._p.y);
 			HashSet<Integer> differentGroups = new HashSet<>();
 			for(Segment s : luc){
 				differentGroups.add(s.getGroup());
@@ -210,7 +210,6 @@ public class Map {
 			
 		}
 		
-	
 		// Remove l U c
 		for(Segment s : lc){
 			status.tree().delete(s);
@@ -219,11 +218,9 @@ public class Map {
 		
 		// insert c union u
 		// Remove and insert c in order to swap the order.
-		status.setInsertMode();
 		
 		for(Segment s : uc){
 			status.tree().insert(s);
-			status.tree().check();
 		}
 		
 		
@@ -240,8 +237,6 @@ public class Map {
 			findNewEvent(rightNeighbour, rightMost, eventPoint);
 		}
 		
-		status.unsetInsertMode();
-		
 	}
 	
 	private void findNewEvent(Segment left, Segment right, ComparablePoint p){
@@ -257,8 +252,8 @@ public class Map {
 					(Utilities.approxEqual(intersectPoint.y, p._p.y) && Utilities.approxGreater(intersectPoint.x, p._p.x))){
 				ComparablePoint pp = new ComparablePoint(intersectPoint);
 				if(eventQueue.search(pp) == null){
-					System.out.println("Found Intersection, adding to event queue");
-					System.out.println("intersection point x: " + intersectPoint.x + ", y:" + intersectPoint.y + "\n ------\n");
+					//System.out.println("Found Intersection, adding to event queue");
+					//System.out.println("intersection point x: " + intersectPoint.x + ", y:" + intersectPoint.y + "\n ------\n");
 					eventQueue.insert(pp);
 				}
 			}
