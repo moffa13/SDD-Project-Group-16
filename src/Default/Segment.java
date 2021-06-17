@@ -265,8 +265,8 @@ public class Segment implements Comparable<Segment> {
 				return -1;
 			}else{
 				// They both cross the sweep line at the same x
-				double s1newIntercept = findIntersectionWithY(_status.getSweepLinePosition() - 0.01); 
-				double s2newIntercept = o.findIntersectionWithY(_status.getSweepLinePosition() - 0.01);
+				double s1newIntercept = findIntersectionWithY(_status.getSweepLinePosition() - 0.001); 
+				double s2newIntercept = o.findIntersectionWithY(_status.getSweepLinePosition() - 0.001);
 				// If the current segment's upper endpoint has smaller X, 
 				// it is considered bigger because after crossing the other segment 
 				// it will be at the opposite side.
