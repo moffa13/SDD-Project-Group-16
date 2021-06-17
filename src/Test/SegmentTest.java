@@ -1,7 +1,6 @@
 package Test;
 import org.junit.Test;
 import Default.ComparablePoint;
-import Default.Direction;
 import Default.Segment;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;

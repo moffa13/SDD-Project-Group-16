@@ -28,6 +28,7 @@ public class SegmentPanel extends JPanel implements MouseListener {
 	private final static int scale = 3;
 	private final MainWindow _window;
 	private boolean _editMode = false;
+	public static final boolean DEBUG_COORDS = false;
 	
 	// Used to create segments in edit mode
 	private ComparablePoint p1;
@@ -54,9 +55,10 @@ public class SegmentPanel extends JPanel implements MouseListener {
 		double reversedY1 = getOffset() - s.getP1()._p.y;
 		double x2 = s.getP2()._p.x;
 		double reversedY2 = getOffset() - s.getP2()._p.y; 
-		g2d.setFont(new Font("TimesRoman", Font.PLAIN, 4));
-		g2d.drawString(x1 + " " +  s.getP1()._p.y, (int)x1, (int)reversedY1);
-		g2d.drawString(x2 + " " + s.getP2()._p.y, (int)x2, (int)reversedY2);
+		if(DEBUG_COORDS){
+			g2d.drawString(x1 + " " +  s.getP1()._p.y, (int)x1, (int)reversedY1);
+			g2d.drawString(x2 + " " + s.getP2()._p.y, (int)x2, (int)reversedY2);
+		}
 		g2d.draw(new Line2D.Double(x1, reversedY1, x2, reversedY2));
 	}
 	
@@ -66,7 +68,7 @@ public class SegmentPanel extends JPanel implements MouseListener {
 	}
 	
 	public void drawPoint(ComparablePoint s, Graphics2D g2d){
-		Rectangle2D.Double rect = new Rectangle2D.Double(s._p.x - 1, getOffset() - s._p.y - 1, 2, 2);
+		Rectangle2D.Double rect = new Rectangle2D.Double(s._p.x - 0.25, getOffset() - s._p.y - 0.25, 0.5, 0.5);
 		g2d.draw(rect);
 	}
 	
@@ -80,6 +82,7 @@ public class SegmentPanel extends JPanel implements MouseListener {
 		super.paintComponent(g);
 		if(_m != null){
 			Graphics2D g2d = (Graphics2D) g;
+			g2d.setFont(new Font("TimesRoman", Font.PLAIN, 4));
 			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			
 			AffineTransform at = new AffineTransform();
