@@ -108,27 +108,6 @@ public class Segment implements Comparable<Segment> {
 		
 	}
 	
-	public boolean isAtLeftRightOfPoint(ComparablePoint p, Direction d){
-		if(isHorizontal()){
-			if(d == Direction.LEFT){
-				// Check if right point is smaller than p.x
-				return Utilities.approxSmaller(getLowerEndpoint()._p.x, p._p.x);
-			}else{
-				// Check if left point is greater than p.x
-				return Utilities.approxGreater(getUpperEndpoint()._p.x, p._p.x);
-			}
-		}
-		
-		double intersect = findIntersectionWithY(p._p.y);
-		
-		if(d == Direction.LEFT){
-			return Utilities.approxSmaller(intersect, p._p.x);
-		}else{
-			return Utilities.approxGreater(intersect, p._p.x);
-		}
-		
-	}
-	
 	/**
 	 * Finds an intersection between two segments
 	 * @param s the segment to look for intersection

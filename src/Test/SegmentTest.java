@@ -244,21 +244,6 @@ public class SegmentTest {
 		s.findIntersectionWithX(50);
 	}
 	
-	
-	@Test
-	public void isAtLeftOrRight(){
-		ComparablePoint p = new ComparablePoint(new Double(10, 10));
-		ComparablePoint pI = new ComparablePoint(new Double(100, 100));
-		Segment s = new Segment(null, 0, p, pI);
-		
-		ComparablePoint pt1 = new ComparablePoint(new Double(0, 50));
-		ComparablePoint pt2 = new ComparablePoint(new Double(60, 50));
-
-		
-		assertTrue(s.isAtLeftRightOfPoint(pt1, Direction.RIGHT));
-		assertTrue(s.isAtLeftRightOfPoint(pt2, Direction.LEFT));
-	}
-	
 	@Test(expected = RuntimeException.class)
 	public void twoVerticalIntersection(){
 		ComparablePoint p = new ComparablePoint(new Double(0, 0));
