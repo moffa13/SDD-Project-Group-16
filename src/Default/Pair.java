@@ -16,4 +16,20 @@ public class Pair <T, V> {
 		_t = t;
 		_v = v;
 	}
+	
+	@Override
+	public boolean equals(Object o){
+		if (o == this) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pair<?, ?> other = (Pair<?, ?>)o;
+        if(other.getKey().equals(getKey()) && other.getValue().equals(getValue()))
+        	return true;
+        return false;
+        
+	}
+	
+	@Override
+	public int hashCode(){
+		return 31 * getKey().hashCode() + getValue().hashCode();
+	}
 }

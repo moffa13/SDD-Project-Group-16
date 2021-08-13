@@ -31,7 +31,7 @@ public class StatusTree extends BalancedBinarySearchTree<Segment> {
 	}
 	
 	/**
-	 * Finds all segments in the status tree crossing a point which is not part of the segments
+	 * Find all segments in the status tree crossing a point which is not part of the segments
 	 * @param p the point we check for intersection
 	 * @return A set of segments which are intersecting with p
 	 */
@@ -43,20 +43,32 @@ public class StatusTree extends BalancedBinarySearchTree<Segment> {
 		
 		HashSet<Segment> all = new HashSet<>();
 		
-		// Intersection of currentSegment with sweep line and p
+		StatusTree leftNeighbourST = getLeft();
+		StatusTree rightNeighbourST = getRight();
+		
 		if(currentSegment.intersectWithPoint(p)){
-			
 			if(!currentSegment.contains(p)){ // The segment does not have an endpoint at the sweepline, add to C
 				all.add(currentSegment);
+			}
+		}else{
+			
+			
+			double SLIntersectionX = currentSegment.findIntersectionWithY(p._p.y);
+			
+			if(Utilities.approxSmaller(SLIntersectionX, p._p.x)){ // intersection with current segment is smaller than the event point, look right neighbour, so remove left one
+				leftNeighbourST = null;
+			}else{
+				rightNeighbourST = null;
 			}
 			
 		}
 		
-		if(getLeft() != null){
-			all.addAll(getLeft().findC(p));
+		if(leftNeighbourST != null){
+			all.addAll(leftNeighbourST.findC(p));
 		}
-		if(getRight() != null){
-			all.addAll(getRight().findC(p));
+		
+		if(rightNeighbourST != null){
+			all.addAll(rightNeighbourST.findC(p));
 		}
 		
 		return all;

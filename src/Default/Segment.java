@@ -2,22 +2,24 @@ package Default;
 import java.awt.geom.Point2D;
 
 public class Segment implements Comparable<Segment> {
-	private final ComparablePoint p1;
-	private final ComparablePoint p2;
+	private final ComparablePoint _p1;
+	private final ComparablePoint _p2;
 	private final Status _status;
 	private final int _segGroup;
+	
+	
 	public Segment(Status status, int segGroup, double p1x, double p1y, double p2x, double p2y){
 		_status = status;
 		_segGroup = segGroup;
-		p1 = new ComparablePoint(new Point2D.Double(p1x, p1y));
-		p2 = new ComparablePoint(new Point2D.Double(p2x, p2y));
+		_p1 = new ComparablePoint(new Point2D.Double(p1x, p1y));
+		_p2 = new ComparablePoint(new Point2D.Double(p2x, p2y));
 	}
 	
 	public Segment(Status status, int segGroup, ComparablePoint p1, ComparablePoint p2){
 		_segGroup = segGroup;
 		_status = status;
-		this.p1 = p1;
-		this.p2 = p2;
+		this._p1 = p1;
+		this._p2 = p2;
 	}
 	
 	public int getGroup(){
@@ -25,23 +27,23 @@ public class Segment implements Comparable<Segment> {
 	}
 	
 	public ComparablePoint getUpperEndpoint(){
-		if(p1.compareTo(p2) > 0){
-			return p1;
+		if(_p1.compareTo(_p2) > 0){
+			return _p1;
 		}
 		
-		return p2;
+		return _p2;
 	}
 	
 	public ComparablePoint getLowerEndpoint(){
-		if(getUpperEndpoint().compareTo(p1) == 0){
-			return p2;
+		if(getUpperEndpoint().compareTo(_p1) == 0){
+			return _p2;
 		}
 		
-		return p1;
+		return _p1;
 	}
 	
 	public double getSlope(){
-		return (p1._p.y - p2._p.y) / (p1._p.x - p2._p.x);
+		return (_p1._p.y - _p2._p.y) / (_p1._p.x - _p2._p.x);
 	}
 	
 	public boolean isVertical(){
@@ -57,8 +59,8 @@ public class Segment implements Comparable<Segment> {
 		}
 		
 		double m = getSlope();
-		double x = p1._p.x;
-		double y = p1._p.y;
+		double x = _p1._p.x;
+		double y = _p1._p.y;
 		double p = y - m * x;
 		double xIntersect = (axisY - p) / m;
 
@@ -74,8 +76,8 @@ public class Segment implements Comparable<Segment> {
 		}
 		
 		double m = getSlope();
-		double x = p1._p.x;
-		double y = p1._p.y;
+		double x = _p1._p.x;
+		double y = _p1._p.y;
 		double p = y - m * x;
 		double yIntersect = (m * axisX) + p;
 
@@ -150,10 +152,10 @@ public class Segment implements Comparable<Segment> {
 			
 		double s1m = getSlope();
 		double s2m = s.getSlope();
-		double s1x = p1._p.x;
-		double s1y = p1._p.y;
-		double s2x = s.p1._p.x;
-		double s2y = s.p1._p.y;
+		double s1x = _p1._p.x;
+		double s1y = _p1._p.y;
+		double s2x = s._p1._p.x;
+		double s2y = s._p1._p.y;
 		double s1p = s1y - s1m * s1x;
 		double s2p = s2y - s2m * s2x;
 		
@@ -176,10 +178,10 @@ public class Segment implements Comparable<Segment> {
 	}
 	
 	public ComparablePoint getP1(){
-		return p1;
+		return _p1;
 	}
 	public ComparablePoint getP2(){
-		return p2;
+		return _p2;
 	}
 	
 	public boolean contains(ComparablePoint p){
@@ -221,6 +223,12 @@ public class Segment implements Comparable<Segment> {
 				&& getLowerEndpoint().compareTo(((Segment)o).getLowerEndpoint()) == 0;
 
     }
+	
+	
+	@Override
+	public int hashCode(){
+		return 31 * _p1.hashCode() + _p2.hashCode();
+	}
 	
 	public boolean isHorizontal(){
 		return Utilities.approxEqual(getP1()._p.y, getP2()._p.y);
@@ -265,11 +273,9 @@ public class Segment implements Comparable<Segment> {
 				return -1;
 			}else{
 				// They both cross the sweep line at the same x
-				double s1newIntercept = findIntersectionWithY(_status.getSweepLinePosition() - 0.01); 
-				double s2newIntercept = o.findIntersectionWithY(_status.getSweepLinePosition() - 0.01);
-				// If the current segment's upper endpoint has smaller X, 
-				// it is considered bigger because after crossing the other segment 
-				// it will be at the opposite side.
+				double s1newIntercept = findIntersectionWithY(_status.getSweepLinePosition() - 0.001); 
+				double s2newIntercept = o.findIntersectionWithY(_status.getSweepLinePosition() - 0.001);
+				
 				if(Utilities.approxGreater(s1newIntercept, s2newIntercept)){
 					return 1;
 				}else{
