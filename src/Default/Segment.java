@@ -22,10 +22,20 @@ public class Segment implements Comparable<Segment> {
 		this._p2 = p2;
 	}
 	
+	/**
+	 * Return the segment's group
+	 * Used when adding a new set of segments and separate them
+	 * Specifically for intersections
+	 * @return
+	 */
 	public int getGroup(){
 		return _segGroup;
 	}
 	
+	/**
+	 * Return the upper endpoint of the segment
+	 * @return A point
+	 */
 	public ComparablePoint getUpperEndpoint(){
 		if(_p1.compareTo(_p2) > 0){
 			return _p1;
@@ -34,6 +44,10 @@ public class Segment implements Comparable<Segment> {
 		return _p2;
 	}
 	
+	/**
+	 * Return the lower endpoint of the segment
+	 * @return A point
+	 */
 	public ComparablePoint getLowerEndpoint(){
 		if(getUpperEndpoint().compareTo(_p1) == 0){
 			return _p2;
@@ -42,14 +56,28 @@ public class Segment implements Comparable<Segment> {
 		return _p1;
 	}
 	
+	/**
+	 * Return the segment's slope
+	 * @return A double precision value
+	 */
 	public double getSlope(){
 		return (_p1._p.y - _p2._p.y) / (_p1._p.x - _p2._p.x);
 	}
 	
+	/**
+	 * Return whether or not the segment is vertical
+	 * @return A boolean
+	 */
 	public boolean isVertical(){
 		return Utilities.approxEqual(getLowerEndpoint()._p.x, getUpperEndpoint()._p.x);
 	}
 	
+	/**
+	 * Find an intersection with an y value
+	 * If the segment is horizontal, throw an exception
+	 * @param axisY The y value we want to check for intersection
+	 * @return A x value corresponding to the intersection with y
+	 */
 	public double findIntersectionWithY(double axisY){
 		
 		if(isVertical()){
@@ -67,6 +95,12 @@ public class Segment implements Comparable<Segment> {
 		return xIntersect;
 	}
 	
+	/**
+	 * Find an intersection with an x value
+	 * If the segment is vertical, throw an exception
+	 * @param axisX The x value we want to check for intersection
+	 * @return An y value corresponding to the intersection with x
+	 */
 	public double findIntersectionWithX(double axisX){
 		
 		if(isHorizontal()){
@@ -84,6 +118,11 @@ public class Segment implements Comparable<Segment> {
 		return yIntersect;
 	}
 	
+	/**
+	 * Whether or not the segment intersects with a point
+	 * @param p The point
+	 * @return A boolean
+	 */
 	public boolean intersectWithPoint(ComparablePoint p){
 		
 		double x1 = getUpperEndpoint()._p.x;
@@ -177,13 +216,27 @@ public class Segment implements Comparable<Segment> {
 		
 	}
 	
+	/**
+	 * Return the first point making the segment
+	 * @return A Point
+	 */
 	public ComparablePoint getP1(){
 		return _p1;
 	}
+	
+	/**
+	 * Return the second point making the segment
+	 * @return A Point
+	 */
 	public ComparablePoint getP2(){
 		return _p2;
 	}
 	
+	/**
+	 * Return if the point is one of the two points making the segment
+	 * @param p The point we want to check
+	 * @return
+	 */
 	public boolean contains(ComparablePoint p){
 		 return getP1().compareTo(p) == 0 || getP2().compareTo(p) == 0;
 	}
@@ -230,6 +283,10 @@ public class Segment implements Comparable<Segment> {
 		return 31 * _p1.hashCode() + _p2.hashCode();
 	}
 	
+	/**
+	 * Whether or not the segment is horizontal
+	 * @return A boolean
+	 */
 	public boolean isHorizontal(){
 		return Utilities.approxEqual(getP1()._p.y, getP2()._p.y);
 	}
@@ -237,6 +294,7 @@ public class Segment implements Comparable<Segment> {
 	@Override
 	/**
 	 * Compares a segment to another
+	 * @param o The segment to compare to
 	 */
 	public int compareTo(Segment o) {
 		

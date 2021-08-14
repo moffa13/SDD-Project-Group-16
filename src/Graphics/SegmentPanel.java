@@ -28,7 +28,7 @@ public class SegmentPanel extends JPanel implements MouseListener {
 	private final static int scale = 3;
 	private final MainWindow _window;
 	private boolean _editMode = false;
-	public static final boolean DEBUG_COORDS = true;
+	public static final boolean DEBUG_COORDS = false;
 	
 	// Used to create segments in edit mode
 	private ComparablePoint p1;

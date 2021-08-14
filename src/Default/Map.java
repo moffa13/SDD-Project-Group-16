@@ -67,21 +67,36 @@ public class Map {
 		writer.close();
 	}
 	
+	/**
+	 * Manually add a segment to the map
+	 * Used when adding a segment in edit mode
+	 * @param s
+	 */
 	public void addSegment(Segment s){
 		if(loadTimes == 0) loadTimes = 1;
 		segments.add(s);
 	}
 	
+	/**
+	 * Return the status of the map (sweepline, status tree, ...)
+	 * @return The status
+	 */
 	public Status getStatus(){
 		return status;
 	}
 	
-	public void reset(){
+	/**
+	 * Remove all computed intersections and reset the status
+	 */
+	private void reset(){
 		intersections.clear();
 		eventQueue = new BalancedBinarySearchTree<>();
 		status.clear();
 	}
 	
+	/**
+	 * Clear the map by removing all segments and intersection, making it empty
+	 */
 	public void clear(){
 		reset();
 		loadTimes = 0;
@@ -109,16 +124,24 @@ public class Map {
 		return leftRightMost;
 	}	
 	
+	/**
+	 * Return all Computed intersections
+	 * @return A set containing pairs of points associated to a set of corresponding segments
+	 */
 	public HashSet<Pair<ComparablePoint, HashSet<Segment>>> getIntersections(){
 		return intersections;
 	}
 	
+	/**
+	 * Return All the segments in the map 
+	 * @return A list of Segments
+	 */
 	public ArrayList<Segment> getSegments(){
 		return segments;
 	}
 	
 	/**
-	 * This adds all the points of each segment to initialize the event queue
+	 * Add all the points of each segment to initialize the event queue
 	 */
 	public void findIntersections(){
 		
@@ -153,6 +176,10 @@ public class Map {
 		
 	}
 	
+	/**
+	 * Process one event point at a time
+	 * @return Whether or not calling this method did process the event queue
+	 */
 	public boolean handleEventPointManual(){
 		if(!eventQueue.isEmpty()){
 			ComparablePoint nextEventPoint = eventQueue.deleteMax();
@@ -164,6 +191,9 @@ public class Map {
 		}
 	}
 	
+	/**
+	 * Process all event points at once and reset the status
+	 */
 	public void handleEventPointAuto(){
 		while(!eventQueue.isEmpty()){
 			ComparablePoint nextEventPoint = eventQueue.deleteMax();
@@ -173,6 +203,9 @@ public class Map {
 		status.clear();
 	}
 	
+	/**
+	 * Handle and event point and find new intersections
+	 */
 	private void handleEventPoint(){
 		
 		ComparablePoint eventPoint = status.getEventPoint();
@@ -239,6 +272,12 @@ public class Map {
 		
 	}
 	
+	/**
+	 * Find a new event between 2 segments
+	 * @param left Left segment
+	 * @param right Right segment
+	 * @param p A point
+	 */
 	private void findNewEvent(Segment left, Segment right, ComparablePoint p){
 		if(left == null || right == null) return; // ensure both neighbours exist
 		
@@ -260,6 +299,10 @@ public class Map {
 		}
 	}
 
+	/**
+	 * Check whether or not the map has no segment in it
+	 * @return A boolean
+	 */
 	public boolean isEmpty() {
 		return segments.isEmpty();
 	}

@@ -119,14 +119,6 @@ public class BalancedBinarySearchTree <E extends Comparable<E>> {
 	}
 	
 	/**
-	 * Return whether or not the tree has not left and right child
-	 * @return A boolean representing if the tree is a leaf
-	 */
-	public boolean isLeaf(){
-		return getRight() == null && getLeft() == null;
-	}
-	
-	/**
 	 * Remove the root node and equilibrate the tree
 	 */
 	private void deleteRoot(){
