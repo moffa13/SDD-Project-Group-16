@@ -51,11 +51,13 @@ public class MenuPanel extends JPanel implements ActionListener {
 		
 	}
 	
+	
+	/**
+	 * Add and set all of the buttons
+	 */
 	private void addButtons(){
 		
 		add(Box.createHorizontalGlue());
-		
-		
 		
 		add(Box.createVerticalGlue());
 		

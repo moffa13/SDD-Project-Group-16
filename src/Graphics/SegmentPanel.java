@@ -34,6 +34,10 @@ public class SegmentPanel extends JPanel implements MouseListener {
 	private ComparablePoint p1;
 	private ComparablePoint p2;
 	
+	/**
+	 * Return the scaled height
+	 * @return A double precision number
+	 */
 	private double getOffset(){
 		return getHeight() / scale;
 	}
@@ -45,11 +49,20 @@ public class SegmentPanel extends JPanel implements MouseListener {
 		addMouseListener(this);
 	}
 	
+	/**
+	 * Associate a map to the panel
+	 * @param m The map
+	 */
 	public void setMap(Map m){
 		_m = m;
 		repaint();
 	}
 	
+	/**
+	 * Helper to draw a segment from a g2d instance
+	 * @param s The segment
+	 * @param g2d The graphics instance
+	 */
 	public void drawSegment(Segment s, Graphics2D g2d){
 		double x1 = s.getP1()._p.x;
 		double reversedY1 = getOffset() - s.getP1()._p.y;
@@ -62,11 +75,23 @@ public class SegmentPanel extends JPanel implements MouseListener {
 		g2d.draw(new Line2D.Double(x1, reversedY1, x2, reversedY2));
 	}
 	
+	/**
+	 * Helper to draw a cross from a g2d instance
+	 * @param w The width
+	 * @param h The height
+	 * @param point The place where we should draw the cross
+	 * @param g2d The graphics instance
+	 */
 	public void drawCross(int w, int h, Point2D.Double point, Graphics2D g2d){
 		g2d.draw(new Line2D.Double(point.x - w / 2, getOffset() - point.y, point.x + w / 2, getOffset() - point.y));
 		g2d.draw(new Line2D.Double(point.x, getOffset() - point.y - h / 2, point.x, getOffset() - point.y + h / 2));
 	}
 	
+	/**
+	 * Helper to draw a custom point from a g2d instance
+	 * @param s The point
+	 * @param g2d The graphics instance
+	 */
 	public void drawPoint(ComparablePoint s, Graphics2D g2d){
 		Rectangle2D.Double rect = new Rectangle2D.Double(s._p.x - 0.25, getOffset() - s._p.y - 0.25, 0.5, 0.5);
 		g2d.draw(rect);
@@ -75,7 +100,7 @@ public class SegmentPanel extends JPanel implements MouseListener {
 
 	@Override
 	/**
-	 * Paints all the needed elements,
+	 * Paint all the needed elements,
 	 * intersections, segments, sweep line, C(p), U(p), L(p)
 	 */
 	public void paintComponent(Graphics g){
@@ -160,10 +185,18 @@ public class SegmentPanel extends JPanel implements MouseListener {
 		
 	}
 
+	/**
+	 * Check if the panel is in edit mode
+	 * @return A boolean
+	 */
 	public boolean getEditMode() {
 		return _editMode;
 	}
 
+	/**
+	 * Set the panel's edit mode
+	 * @param editMode A boolean
+	 */
 	public void setEditMode(boolean editMode) {
 		p1 = null;
 		p2 = null;
@@ -171,12 +204,7 @@ public class SegmentPanel extends JPanel implements MouseListener {
 		repaint();
 	}
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		
-		
-	}
-
+	
 	@Override
 	public void mousePressed(MouseEvent e) {
 		if(_editMode){
@@ -198,22 +226,17 @@ public class SegmentPanel extends JPanel implements MouseListener {
 			repaint();
 		}
 	}
+	
+	@Override
+	public void mouseClicked(MouseEvent e) {}
+
 
 	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseReleased(MouseEvent e) {}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseEntered(MouseEvent e) {}
 
 	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseExited(MouseEvent e) {}
 }

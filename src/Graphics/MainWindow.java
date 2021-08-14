@@ -60,16 +60,27 @@ public class MainWindow extends JFrame implements ActionListener {
 		setVisible(true);
 	}
 	
+	/**
+	 * Add some user-defined color instead of random
+	 */
 	private void populateUserColors(){
 		userColors.add(Color.WHITE);
 		userColors.add(Color.BLACK);		
 	}
 	
+	/**
+	 * Set whether or not we should only show segment that intersect between the groups 
+	 * @param v the boolean
+	 */
 	public void setShowOnlyIntersections(boolean v){
 		showOnlyIntersections = v;
 		repaint();
 	}
 	
+	/**
+	 * Whether or not we should only show segment that intersect between the groups
+	 * @return
+	 */
 	public boolean shouldShowOnlyIntersections(){
 		return showOnlyIntersections;
 	}
@@ -93,6 +104,9 @@ public class MainWindow extends JFrame implements ActionListener {
 		return new Color(r, g, b);
 	}
 	
+	/**
+	 * Load the menubar
+	 */
 	private void loadMenu(){
 		JMenuBar menuBar = new JMenuBar();
 		
@@ -108,10 +122,18 @@ public class MainWindow extends JFrame implements ActionListener {
 		setJMenuBar(menuBar);
 	}
 	
+	/**
+	 * Set the window's edit mode
+	 * @param editMode A boolean
+	 */
 	public void editMode(boolean editMode){
 		_segPanel.setEditMode(editMode);
 	}
 	
+	/**
+	 * Check if the window is in edit mode
+	 * @return A boolean
+	 */
 	public boolean isEditMode(){
 		return _segPanel.getEditMode();
 	}
@@ -126,6 +148,10 @@ public class MainWindow extends JFrame implements ActionListener {
 		
 	}
 	
+	/**
+	 * Find one intersection every time unit
+	 * @param interval The interval in ms, if interval is 0, show all intersections at once
+	 */
 	public void findIntersections(int interval){
 		if(_map != null){
 			
@@ -151,6 +177,9 @@ public class MainWindow extends JFrame implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Reset the map with colors
+	 */
 	public void clearAllMaps(){
 		_map.clear();
 		segGroup = 0;
@@ -207,10 +236,18 @@ public class MainWindow extends JFrame implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Return the color associated with the group the segment's in
+	 * @param s The segment we want to check
+	 * @return A color
+	 */
 	public Color getColor(Segment s){
 		return groupColors.get(s.getGroup());
 	}
 
+	/**
+	 * Manually find intersection one by one
+	 */
 	public void stepByStep() {
 		if(_map == null) return;
 		
@@ -224,7 +261,12 @@ public class MainWindow extends JFrame implements ActionListener {
 		repaint();
 		
 	}
-
+	
+	/**
+	 * Add a segment to the window from its points
+	 * @param p1 The first point
+	 * @param p2 The second point
+	 */
 	public void addSegment(ComparablePoint p1, ComparablePoint p2) {
 		Segment s = new Segment(_map.getStatus(), segGroup, p1, p2);
 		_map.addSegment(s);
