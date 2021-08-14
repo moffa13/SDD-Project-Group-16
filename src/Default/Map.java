@@ -20,8 +20,7 @@ public class Map {
 	private int loadTimes = 0;
 	
 
-	public Map(){
-	}
+	public Map(){}
 	
 	/**
 	 * Loads all the segments found in the file into the segment list
@@ -154,15 +153,8 @@ public class Map {
 			ComparablePoint p1 = s.getP1();
 			ComparablePoint p2 = s.getP2();
 			
-			ComparablePoint eventQueuePoint;
-			
-			
-			if((eventQueuePoint = eventQueue.search(p1)) == null) eventQueue.insert(p1);
-			else p1 = eventQueuePoint;
-			if((eventQueuePoint = eventQueue.search(p2)) == null) eventQueue.insert(p2);
-			else p2 = eventQueuePoint;
-			
-			
+			p1 = eventQueue.insert(p1);
+			p2 = eventQueue.insert(p2);			
 			
 			if(s.getUpperEndpoint().compareTo(p1) == 0){
 				p1.addLowerSegment(s);
@@ -230,7 +222,6 @@ public class Map {
 		lc.addAll(c);
 		
 		if(luc.size() > 1){
-			//System.out.println("intersection point x: " + eventPoint._p.x + ", y:" + eventPoint._p.y);
 			HashSet<Integer> differentGroups = new HashSet<>();
 			for(Segment s : luc){
 				differentGroups.add(s.getGroup());
@@ -239,8 +230,6 @@ public class Map {
 			if(loadTimes == 1 || differentGroups.size() > 1){
 				intersections.add(new Pair<ComparablePoint, HashSet<Segment>>(eventPoint, luc));
 			}
-			
-			
 		}
 		
 		// Remove l U c
@@ -289,13 +278,9 @@ public class Map {
 			if(
 					Utilities.approxSmaller(intersectPoint.y, p._p.y) ||
 					(Utilities.approxEqual(intersectPoint.y, p._p.y) && Utilities.approxGreater(intersectPoint.x, p._p.x))){
-				ComparablePoint pp = new ComparablePoint(intersectPoint);
-				if(eventQueue.search(pp) == null){
-					//System.out.println("Found Intersection, adding to event queue");
-					//System.out.println("intersection point x: " + intersectPoint.x + ", y:" + intersectPoint.y + "\n ------\n");
+					ComparablePoint pp = new ComparablePoint(intersectPoint);
 					eventQueue.insert(pp);
-				}
-			}
+			}	
 		}
 	}
 

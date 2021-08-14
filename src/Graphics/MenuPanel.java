@@ -76,8 +76,8 @@ public class MenuPanel extends JPanel implements ActionListener {
 		
 		intersectionsInterval.setOrientation(SwingConstants.HORIZONTAL);
 		intersectionsInterval.setMinimum(0);
-		intersectionsInterval.setMaximum(500);
-		intersectionsInterval.setMinorTickSpacing(50);
+		intersectionsInterval.setMaximum(100);
+		intersectionsInterval.setMinorTickSpacing(10);
 		intersectionsInterval.setValue(animationInterval);
 		intersectionsInterval.setPaintTicks(true);
 		intersectionsInterval.setPaintLabels(true);
@@ -85,7 +85,7 @@ public class MenuPanel extends JPanel implements ActionListener {
 			
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				animationInterval = ((JSlider)e.getSource()).getValue();				
+				animationInterval = ((JSlider)e.getSource()).getValue();	
 			}
 		});
 		add(intersectionsInterval);

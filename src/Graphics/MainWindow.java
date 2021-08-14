@@ -37,6 +37,7 @@ public class MainWindow extends JFrame implements ActionListener {
 	private HashMap<Integer, Color> groupColors = new HashMap<>();
 	private Stack<Color> userColors = new Stack<>();
 	private boolean showOnlyIntersections = false;
+	private Timer _t;
 	
 	
 	public MainWindow(){
@@ -171,8 +172,11 @@ public class MainWindow extends JFrame implements ActionListener {
 				_map.handleEventPointAuto();
 				repaint();
 			}else{
-				Timer t = new Timer(interval, listener);
-				t.start();
+				if(_t != null){
+					_t.stop();
+				}
+				_t = new Timer(interval, listener);
+				_t.start();
 			}			
 		}
 	}

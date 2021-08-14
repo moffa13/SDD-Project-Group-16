@@ -61,18 +61,23 @@ public class BalancedBinarySearchTree <E extends Comparable<E>> {
 	 * Insert an element E into the tree in an equilibrated way
 	 * @param elem The element to insert
 	 */
-	public void insert(E elem){
+	public E insert(E elem){
 		if(isEmpty()){
 			insertEmpty(elem);
+			return elem;
 		}else{
 			int comp = elem.compareTo(getData());
+			E newElem;
 			if(comp < 0){
-				getLeft().insert(elem);
+				newElem = getLeft().insert(elem);
 			}else if(comp > 0){
 				// elem is greater, insert right
-				getRight().insert(elem);
+				newElem = getRight().insert(elem);
+			}else{
+				return getData();
 			}
 			equilibrate();
+			return newElem;
 		}
 	}
 	
