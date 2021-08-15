@@ -127,11 +127,7 @@ public class SegmentPanel extends JPanel implements MouseListener {
 			
 			// Segments
 			for(Segment s : _window.shouldShowOnlyIntersections() ? intersectSegments : _m.getSegments()){
-				if(_m.getStatus().tree().search(s) != null) {
-					g2d.setColor(Color.WHITE);
-				}else {
-					g2d.setColor(_window.getColor(s));
-				}
+				g2d.setColor(_window.getColor(s));
 				drawSegment(s, g2d);
 			}
 			

@@ -59,10 +59,10 @@ public class StatusTree extends BalancedBinarySearchTree<Segment> {
 		StatusTree leftNeighbourST = getLeft();
 		StatusTree rightNeighbourST = getRight();
 		
-		if(currentSegment.intersectWithPoint(p) && !currentSegment.contains(p)){
-			all.add(currentSegment);
+		if(currentSegment.intersectWithPoint(p)){
+			if(!currentSegment.contains(p))
+				all.add(currentSegment);
 		}else{
-			
 			
 			double SLIntersectionX = currentSegment.findIntersectionWithY(p._p.y);
 			

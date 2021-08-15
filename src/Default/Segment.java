@@ -280,7 +280,7 @@ public class Segment implements Comparable<Segment> {
 	
 	@Override
 	public int hashCode(){
-		return 31 * _p1.hashCode() + _p2.hashCode();
+		return 31 * _p1.hashCode() + _p2.hashCode() + _segGroup;
 	}
 	
 	/**
